@@ -23,4 +23,20 @@ p.then(
   }
 )
 
-
+//一个实例then多次
+p.then(
+  data=>{
+  console.log('success',data)
+  },
+  err=>{
+  console.log('error',err)
+  }
+)
+p.then(
+  data=>{
+  console.log('success',data)
+  },
+  err=>{
+  console.log('error',err)
+  }
+)
