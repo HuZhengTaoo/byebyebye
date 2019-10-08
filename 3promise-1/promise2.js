@@ -34,21 +34,36 @@ class Promise {
   }
   // then 方法会判断当前的状态
   then(onFulfilled, onRejected) {
-    if (this.status === FULFILLED) {
-      onFulfilled(this.value);
-    }
-    if (this.status === REJECTED) {
-      onRejected(this.reason);
-    }
-    if (this.status === PENDING) {
-      this.onResolvedCallbacks.push(()=>{
-        // todo ...
-        onFulfilled(this.value);
-      })
-      this.onRejectedCallbacks.push(()=>{
-        onRejected(this.reason)
-      })
-    }
+    // then 方法调用后应该返回一个新的promise
+    let promise2 = new Promise((resolve, reject) =>{
+      // // 应该在返回的promise中，取到上一次的状态 来决定这个promise2是成功还是失败
+      // if(this.status === FULFILLED){
+      //   //x 就是当前的data
+      //   let x = onFulfilled(this.value) //将then中的方法执行
+      //   resolve(x) //将结果传递到resolve方法中
+      // }
+      
+
+      //应该在返回的promise中取到上一次的状态 来取决这个promise2是成功还是失败
+      if (this.status === FULFILLED) {
+       let x = onFulfilled(this.value);
+       resolve(x)
+      }
+      if (this.status === REJECTED) {
+        onRejected(this.reason);
+      }
+      if (this.status === PENDING) {
+        this.onResolvedCallbacks.push(()=>{
+          // todo ...
+          onFulfilled(this.value);
+        })
+        this.onRejectedCallbacks.push(()=>{
+          onRejected(this.reason)
+        })
+      }
+    })
+    return promise2
+    
   }
 }
 module.exports = Promise
