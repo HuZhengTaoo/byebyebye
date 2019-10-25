@@ -25,6 +25,8 @@ function deepClone(obj){
     // 无论是对象还是数组 都可以循环
     if(obj.hasOwnProperty(key)){
       // cloneObj[key] = obj[key]
+      // 做一个映射关系 把它存起来
+      // js数据结构 集合set hash表
       cloneObj[key] = deepClone(obj[key])
     }
   }
